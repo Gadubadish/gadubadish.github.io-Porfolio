@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pep Ramírez — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:          #0a0a0a;
+      --surface:     #111111;
+      --border:      #222222;
+      --accent:      #e8ff47;
+      --text:        #f0f0f0;
+      --muted:       #666666;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --max-width: 1200px;
+      --nav-height: 64px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, video { display: block; max-width: 100%; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ═══ NAVIGATION ═══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links button {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-links button:hover { color: var(--text); border-color: var(--border); }
+    .nav-links button.active { color: var(--accent); border-color: var(--accent); }
+
+
+
+    /* ═══ PAGES ═══ */
+    .page {
+      display: none;
+      padding-top: var(--nav-height);
+      min-height: 100vh;
+      animation: fadeIn 0.3s ease;
+    }
+    .page.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+
+    h1, h2, h3 { font-family: var(--font-display); line-height: 1; letter-spacing: 0.02em; }
+    h1 { font-size: clamp(4rem, 12vw, 10rem); }
+    h2 { font-size: clamp(2.5rem, 6vw, 5rem); }
+    h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+    p { font-weight: 300; color: var(--text); max-width: 65ch; }
+
+    /* ═══ HOME ═══ */
+    .gadu { padding: 6rem 0 4rem; border-bottom: 1px solid var(--border); }
+    .gadu-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+    .gadu h1 { color: var(--text); margin-bottom: 2rem; }
+    .gadu h1 span { color: var(--accent); display: block; }
+    .gadu-bio { font-size: 1.1rem; font-weight: 300; max-width: 50ch; color: var(--muted); margin-bottom: 3rem; line-height: 1.8; }
+    .gadu-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn { display: inline-block; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.8rem 2rem; border: 1px solid var(--border); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; border-radius: 2px; background: none; color: var(--text); }
+    .btn:hover { background: var(--surface); border-color: var(--text); }
+    .btn-primary { background: var(--accent); color: #000; border-color: var(--accent); }
+    .btn-primary:hover { background: #fff; border-color: #fff; }
+
+    .gadu-stats { display: flex; gap: 3rem; padding: 3rem 0 0; flex-wrap: wrap; }
+    .stat-number { font-family: var(--font-display); font-size: 3rem; color: var(--accent); line-height: 1; }
+    .stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.25rem; }
+
+    /* ═══ SECTION HEADER ═══ */
+    .section-header { padding: 5rem 0 3rem; }
+    .section-header h2 { margin-bottom: 1rem; }
+    .section-header p { color: var(--muted); }
+
+    /* ═══ PROJECT CARDS ═══ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(1280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 6rem;
+    }
+
+    .project-card {
+      background: var(--bg);
+      padding: 2rem 2rem 1rem;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .project-card:hover { background: var(--surface); }
+
+    .project-year { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.1rem; }
+    .project-card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .project-card > p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.1rem; }
+
+    /* ── clickable media wrapper ── */
+    .media-trigger {
+      position: relative;
+      width: 100%;
+      background: #000;
+      overflow: hidden;
+      margin-bottom: 0.1rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .media-trigger video,
+    .media-trigger img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    /* hover overlay */
+    .media-trigger::after {
+      content: 'VIEW PROJECT';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .media-trigger:hover::after { opacity: 1; }
+
+    .image-wrap { position: relative; width: 100%; background: #000; overflow: hidden; margin-bottom: 0.1rem; border: 1px solid var(--border); }
+
+    .video-placeholder { width: 100%; aspect-ratio: 16/9; background: var(--surface); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+
+    .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto; }
+    .tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.6rem; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; }
+
+    /* ═══ COMPETITIONS ═══ */
+    .proj-header { padding: 6rem 0 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+    .project-row { display: grid; grid-template-columns: 1fr; align-items: start; gap: 2rem; padding: 2rem; border-bottom: 1px solid var(--border); transition: background 0.2s; }
+    .project-row:hover { background: var(--surface); }
+    .proj-year { font-family: var(--font-display); font-size: 6rem; color: var(--muted); line-height: 1; padding-top: 0.5rem; }
+    .proj-details h3 { font-size: 1.4rem; margin-bottom: 0.4rem; }
+    .proj-details p { font-size: 0.9rem; color: var(--muted); }
+    .comp-result { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.08em; color: var(--accent); text-align: right; white-space: nowrap; padding-top: 0.2rem; }
+
+    /* ═══ ABOUT ═══ */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 3rem 0 6rem; }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .project-row { grid-template-columns: 70px 1fr; }
+      .comp-result { display: none; }
+    }
+    .about-text h2 { margin-bottom: 1.5rem; }
+    .about-text p { color: var(--muted); margin-bottom: 1.25rem; }
+    .skills-block { margin-bottom: 2.5rem; }
+    .skills-block h3 { font-size: 1rem; letter-spacing: 0.08em; margin-bottom: 1rem; color: var(--muted); }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .skill-list li { font-size: 0.95rem; padding-left: 1rem; border-left: 2px solid var(--accent); line-height: 1.4; }
+
+    /* ═══ CONTACT / FOOTER ═══ */
+    .contact-block { padding: 5rem 0; border-top: 1px solid var(--border); }
+    .contact-block h2 { margin-bottom: 1rem; }
+    .contact-block p { color: var(--muted); margin-bottom: 2rem; }
+    .contact-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; }
+
+
+
+
+
+    /* ╔═══════════════════════════════════════════╗
+       ║   DETAIL "PAGE" (same nav)       ║
+       ╚═══════════════════════════════════════════╝ */
+
+    /* .page system already handles this — detail pages use id="detail-*" */
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 1.5rem 0 0;
+      transition: color 0.2s;
+    }
+    .detail-back:hover { color: var(--accent); }
+    .detail-back::before { content: '←'; font-size: 1rem; }
+
+
+    /* ═══ SHARED DETAIL CONTENT STYLES ═══ */
+    .detail-media {
+      width: 100%;
+      background: #000;
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .detail-media video,
+    .detail-media img {
+      width: 100%;
+      display: block;
+    }
+
+    .detail-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .detail-meta-item {
+      padding: 1rem;
+      border: 1px solid var(--border);
+    }
+
+    .detail-meta-item .label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-meta-item .value {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    .detail-writeup {
+      margin-bottom: 2rem;
+    }
+
+    .detail-writeup h4 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .detail-writeup p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      max-width: 55ch;
+    }
+
+    .detail-gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .detail-gallery img {
+      width: 100%;
+      display: block;
+      background: var(--surface);
+      min-height: 140px;
+    }
+
+    /* overlay-specific padding */
+    .overlay-panel .detail-content { padding: 2rem; }
+
+    /* page-mode detail content padding */
+    #detail-page .detail-content { padding: 3rem 0 6rem; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <span class="nav-logo">PEP RAMÍREZ</span>
+    <ul class="nav-links">
+      <li><button data-target="home">Home</button></li>
+      <li><button data-target="3d" class="active">3D Modelling</button></li>
+      <li><button data-target="video">Video Editing</button></li>
+      <li><button data-target="games">Games</button></li>
+      <li><button data-target="about">About</button></li>
+    </ul>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════════
+       DEV MODE SWITCHER — remove when you've
+       chosen your favourite mode
+  ═══════════════════════════════════════════ -->
+  <div class="dev-switcher">
+    <div class="dev-switcher-label">Detail view mode</div>
+    <button data-mode="overlay" class="active">A — Overlay panel</button>
+    <button data-mode="inline">B — Inline expand</button>
+    <button data-mode="page">C — New page</button>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       MODE A: OVERLAY PANEL
+  ═══════════════════════════════════════════ -->
+  <div class="overlay" id="overlay" aria-modal="true" role="dialog">
+    <div class="overlay-panel" id="overlay-panel">
+      <div class="overlay-close">
+        <span id="overlay-title">PROJECT</span>
+        <button onclick="closeOverlay()">✕ Close</button>
+      </div>
+      <div class="detail-content" id="overlay-body">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       MODE C: DETAIL PAGE
+  ═══════════════════════════════════════════ -->
+  <section id="detail-page" class="page">
+    <div class="container">
+      <div class="detail-back" id="detail-back-btn">Back</div>
+      <div class="detail-content" id="detail-page-body">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       HOME PAGE
+  ═══════════════════════════════════════════ -->
+  <section id="home" class="page">
+    <div class="container">
+      <div class="gadu">
+        <p class="gadu-eyebrow">Portfolio — 3D &amp; Video</p>
+        <h1>PEP<span>RAMÍREZ</span></h1>
+        <p class="gadu-bio">3D artist, video editor, and wannabe game dev based in Barcelona.</p>
+        <div class="gadu-cta">
+          <button class="btn btn-primary" onclick="showPage('3d')">View 3D Work</button>
+          <button class="btn" onclick="showPage('video')">Video Editing</button>
+        </div>
+        <div class="gadu-stats">
+          <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">Projects</div></div>
+          <div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Years Active</div></div>
+          <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Competitions</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       3D PAGE
+  ═══════════════════════════════════════════ -->
+  <section id="3d" class="page active">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-label">3D Modelling</p>
+        <h2>Three-Dimensional<br>Work</h2>
+        <p>A selection of 3D projects, newest first.</p>
+
+      </div>
+
+      <!-- jump links: these just scroll to the sections below via their #id, they don't switch pages -->
+      <button class="btn" onclick="location.href='#Challenges'">Challenges</button>
+      <button class="btn" onclick="location.href='#OtherWork'">Other Work</button>
+
+      <div class="section-header" id="Challenges">
+        <p class="section-label">3D Modelling</p>
+        <h3>Pwnisher's</h3>
+        <h2>3D Challenges</h2>
+        <p>All my Pwnisher 3D challenge entries.</p>
+      </div>
+
+      <!-- ══ PROJECT CARDS ══
+           Each card has data-project="id" on the media-trigger.
+           Project data is defined in the JS PROJECTS object below.
+      ══ -->
+      <div class="projects-grid" id="grid-3d">
+
+        <div class="project-card" data-card-id="dream-sequence">
+          <div class="project-year">FEB 2026</div>
+          <h3>Dream Sequence</h3>
+          <div class="media-trigger" data-project="dream-sequence">
+            <video autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
+              <source src="Challanges/DS_Entry.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <!-- Mode B inline detail injected here -->
+          <div class="inline-detail" id="inline-dream-sequence"></div>
+        </div>
+
+        <div class="project-card" data-card-id="rampage-rally">
+          <div class="project-year">AUG 2025</div>
+          <h3>Rampage Rally</h3>
+          <div class="media-trigger" data-project="rampage-rally">
+            <video autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
+              <source src="Challanges/RR_Entry.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="inline-detail" id="inline-rampage-rally"></div>
+        </div>
+
+        <div class="project-card" data-card-id="chasms-call">
+          <div class="project-year">FEB 2025</div>
+          <h3>Chasm's Call</h3>
+          <div class="media-trigger" data-project="chasms-call">
+            <video autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
+              <source src="Challanges/CC_Entry.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="inline-detail" id="inline-chasms-call"></div>
+        </div>
+
+        <div class="project-card" data-card-id="boss-fight">
+          <div class="project-year">AUG 2023</div>
+          <h3>Boss Fight</h3>
+          <div class="media-trigger" data-project="boss-fight">
+            <video autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
+              <source src="Challanges/BF_Entry.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="inline-detail" id="inline-boss-fight"></div>
+        </div>
+
+        <div class="project-card" data-card-id="endless-engines">
+          <div class="project-year">FEB 2023</div>
+          <h3>Endless Engines</h3>
+          <div class="media-trigger" data-project="endless-engines">
+            <video autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
+              <source src="EE_Entry.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="inline-detail" id="inline-endless-engines"></div>
+        </div>
+
+        <div class="project-card" data-card-id="moving-meditations">
+          <div class="project-year">AUG 2022</div>
+          <h3>Moving Meditations</h3>
+          <div class="media-trigger" data-project="moving-meditations">
+            <video autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
+              <source src="Challanges/MM_Entry.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="inline-detail" id="inline-moving-meditations"></div>
+        </div>
+
+        <div class="project-card" data-card-id="infinite-journeys">
+          <div class="project-year">FEB 2022</div>
+          <h3>Infinite Journeys</h3>
+          <div class="media-trigger" data-project="infinite-journeys">
+            <video autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
+              <source src="IJ_Entry.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="inline-detail" id="inline-infinite-journeys"></div>
+        </div>
+
+      </div><!-- /projects-grid -->
+
+
+      <!-- ══ OTHER WORK ══ -->
+      <div class="proj-header" id="OtherWork">
+        <p class="section-label">Personal Projects</p>
+        <h2>Other Work</h2>
+        <p>Smaller 3D projects.</p>
+      </div>
+
+      <!-- 2025 / 2024: empty placeholders — add project-rows here the same
+           way the 2022/2021/2020 entries below are built, then delete
+           this comment once filled in. -->
+      <div class="proj-year">2025</div>
+      <div class="project-row"><div class="proj-details"></div></div>
+
+      <div class="proj-year">2024</div>
+      <div class="project-row"><div class="proj-details"></div></div>
+
+      <div class="proj-year">2022</div>
+
+      <div class="project-row">
+        <div class="media-trigger" data-project="atmos">
+          <img src="other works/2022/Atmos/Atmos.png" alt="Atmos" />
+        </div>
+        <div class="inline-detail" id="inline-atmos"></div>
+      </div>
+
+      <div class="project-row">
+        <div class="media-trigger" data-project="strato">
+          <img src="other works/2022/Strato/Strato.png" alt="Strato" />
+        </div>
+        <div class="inline-detail" id="inline-strato"></div>
+      </div>
+
+      <div class="proj-year">2021</div>
+
+      <div class="project-row">
+        <div class="media-trigger" data-project="axe">
+          <img src="other works/2021/Axe/AxeChop.png" alt="Axe" />
+        </div>
+        <div class="inline-detail" id="inline-axe"></div>
+      </div>
+
+      <div class="project-row">
+        <div class="media-trigger" data-project="spidre">
+          <img src="other works/2021/spidre/Spidre.png" alt="Spidre" />
+        </div>
+        <div class="inline-detail" id="inline-spidre"></div>
+      </div>
+
+      <div class="proj-year">2020</div>
+
+      <div class="project-row">
+        <div class="media-trigger" data-project="space-station">
+          <img src="other works/2020/space station/Space Station.png" alt="Space Station" />
+        </div>
+        <div class="inline-detail" id="inline-space-station"></div>
+      </div>
+
+      <div class="project-row">
+        <div class="media-trigger" data-project="portal-gun">
+          <img src="other works/2020/Portal Gun/Portal Gun.png" alt="Portal Gun" />
+        </div>
+        <div class="inline-detail" id="inline-portal-gun"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       VIDEO PAGE
+  ═══════════════════════════════════════════ -->
+  <section id="video" class="page">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Video Editing</p>
+        <h2>Recorded &amp;<br>Edited</h2>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-year">2023</div>
+          <h3>Cowboy Bebop x Star Citizen</h3>
+            <video controls preload="metadata"><source src="Cowboy Bebop.mp4" type="video/mp4" /></video>
+   
+          <div class="inline-detail" id="inline-video-1"></div>
+          <div class="tags"><span class="tag">After Effects</span><span class="tag">Premiere Pro</span></div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-year">2025</div>
+          <h3>How is This Even a Videogame</h3>
+
+          <a href="https://youtu.be/N39-EQbtJB0" target="_blank">
+          <img src="videos/HD2Cinema.jpg" alt="Cinema"/>
+          </a>
+
+          <div class="tags"><span class="tag">After Effects</span><span class="tag">Premiere Pro</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- ══════════════════════════════════════════
+       GAMES PAGE
+  ═══════════════════════════════════════════ -->
+  <section id="games" class="page">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Games</p>
+        <h2>Videogame development <br> projects</h2>
+        <p>Newest first.</p>
+        <div class="proj-header" id="OtherWork">
+        <h2>Game Jams</h2>
+        <p>Games made in a small amount of time.</p>
+      </div>
+
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-year">2026</div>
+          <div class= "detail-meta">
+        <div class="detail-meta-item">
+          <div class="label">Made in:</div>
+          <div class="value">7 Days</div>
+        </div>
+                <div class="detail-meta-item">
+          <div class="label">Project name</div>
+          <div class="value"> WINDMILL</div>
+        </div>
+        </div>
+          
+
+
+          <a href="https://gadubadish.itch.io/windmill" target="_blank">
+            <img src="games/Windmill.png" alt="Windmill"/>
+          </a>
+          <div class="inline-detail" id="inline-video-1"></div>
+          <div class="tags"><span class="tag">Unity</span><span class="tag">Blender</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       ABOUT PAGE
+  ═══════════════════════════════════════════ -->
+  <section id="about" class="page">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label">About</p>
+          <h2>A Bit About Me</h2>
+          <p>I'm Pep Ramírez, a 3D artist and video editor based in Barcelona. I've been working with Blender and Unity since 2019.</p>
+          <p>Outside of personal projects I've competed in 3D challenges and game jams. [maybe explain about hs interactive and abandoned].</p>
+          <br>
+          <div class="contact-links">
+            <a href="mailto:pepnasa100@email.com" class="btn btn-primary">Email Me</a>
+            <a href="https://linkedin.com/in/yourhandle" class="btn" target="_blank">LinkedIn</a>
+          </div>
+        </div>
+        <div class="about-sidebar">
+          <div class="skills-block">
+            <h3>3D Software</h3>
+            <ul class="skill-list"><li>Blender</li><li>Cinema 4D</li></ul>
+          </div>
+          <div class="skills-block">
+            <h3>Video &amp; Post</h3>
+            <ul class="skill-list"><li>Adobe Premiere Pro</li><li>After Effects</li><li>DaVinci Resolve</li></ul>
+          </div>
+          <div class="skills-block">
+            <h3>Other</h3>
+            <ul class="skill-list"><li>Photoshop</li><li>HTML / CSS</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <span>© 2026 Pep Ramírez — All rights reserved</span>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════
+       PROJECT DATA
+       ─────────────────────────────────────────
+       To add/edit a project:
+       1. Find its id in PROJECTS below (or add one)
+       2. Fill in title, date, tech, renderTime,
+          writeup (array of paragraphs),
+          mainMedia (path to video/image),
+          mediaType ('video' or 'image'),
+          gallery (array of image paths — can be [])
+       ─────────────────────────────────────────
+  ═══════════════════════════════════════════ -->
+  <script>
+  const PROJECTS = {
+
+    "dream-sequence": {
+      title: "Dream Sequence",
+      date: "February 2026",
+      challenge: "Pwnisher Challenge",
+      tech: "Blender, Cycles",
+      renderTime: "— hrs",
+      writeup: [
+        "Add a short description of what this project is and what inspired it.",
+        "Talk about the process — what was tricky, what you learned, any tools or techniques you used.",
+        "Optional: mention how it placed or how the community responded."
+      ],
+      mainMedia: "Challanges/DS_Entry.mp4",
+      mediaType: "video",
+      gallery: []
+      // gallery: ["path/to/wip1.jpg", "path/to/wip2.jpg"]
+    },
+
+    "rampage-rally": {
+      title: "Rampage Rally",
+      date: "August 2025",
+      challenge: "Pwnisher Challenge",
+      tech: "Blender, EEVEE",
+      renderTime: "— hrs",
+      writeup: [
+        "Add a short description of what this project is and what inspired it.",
+        "Talk about the process — what was tricky, what you learned."
+      ],
+      mainMedia: "Challanges/RR_Entry.mp4",
+      mediaType: "video",
+      gallery: []
+    },
+
+    "chasms-call": {
+      title: "Chasm's Call",
+      date: "February 2025",
+      challenge: "Pwnisher Challenge",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: [
+        "Add a short description of what this project is.",
+        "Describe your process."
+      ],
+      mainMedia: "Challanges/CC_Entry.mp4",
+      mediaType: "video",
+      gallery: []
+    },
+
+    "boss-fight": {
+      title: "Boss Fight",
+      date: "August 2023",
+      challenge: "Pwnisher Challenge",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "Challanges/BF_Entry.mp4",
+      mediaType: "video",
+      gallery: []
+    },
+
+    "endless-engines": {
+      title: "Endless Engines",
+      date: "February 2023",
+      challenge: "Pwnisher Challenge",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "EE_Entry.mp4",
+      mediaType: "video",
+      gallery: []
+    },
+
+    "moving-meditations": {
+      title: "Moving Meditations",
+      date: "August 2022",
+      challenge: "Pwnisher Challenge",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "Challanges/MM_Entry.mp4",
+      mediaType: "video",
+      gallery: []
+    },
+
+    "infinite-journeys": {
+      title: "Infinite Journeys",
+      date: "February 2022",
+      challenge: "Pwnisher Challenge",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "IJ_Entry.mp4",
+      mediaType: "video",
+      gallery: []
+    },
+
+    "atmos": {
+      title: "Atmos",
+      date: "2022",
+      challenge: "Other Work",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "other works/2022/Atmos/Atmos.png",
+      mediaType: "image",
+      gallery: []
+    },
+
+    "strato": {
+      title: "Strato",
+      date: "2022",
+      challenge: "Other Work",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "other works/2022/Strato/Strato.png",
+      mediaType: "image",
+      gallery: []
+    },
+
+
+    "axe": {
+      title: "Axe",
+      date: "2021",
+      challenge: "Other Work",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "other works/2021/Axe/AxeChop.png",
+      mediaType: "image",
+      gallery: []
+    },
+
+    "spidre": {
+      title: "Spidre",
+      date: "2021",
+      challenge: "Other Work",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "other works/2021/spidre/Spidre.png",
+      mediaType: "image",
+      gallery: []
+    },
+
+    "space-station": {
+      title: "Space Station",
+      date: "2020",
+      challenge: "Other Work",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "other works/2020/space station/Space Station.png",
+      mediaType: "image",
+      gallery: []
+    },
+
+    "portal-gun": {
+      title: "Portal Gun",
+      date: "2020",
+      challenge: "Other Work",
+      tech: "Blender",
+      renderTime: "— hrs",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "other works/2020/Portal Gun/Portal Gun.png",
+      mediaType: "image",
+      gallery: []
+    },
+
+    "video-1": {
+      title: "Video Title",
+      date: "2025",
+      challenge: "Personal",
+      tech: "Premiere Pro, After Effects",
+      renderTime: "—",
+      writeup: ["Description here.", "Process notes here."],
+      mainMedia: "videos/video1.mp4",
+      mediaType: "video",
+      gallery: []
+    }
+
+  };
+
+
+  /* ════════════════════════════════════════════
+     BUILD DETAIL HTML from a project object
+  ════════════════════════════════════════════ */
+  function buildDetailHTML(p) {
+    const mediaHTML = p.mediaType === 'video'
+      ? `<video controls autoplay loop muted playsinline style="width:100%;display:block;">
+           <source src="${p.mainMedia}" type="video/mp4" />
+         </video>`
+      : `<img src="${p.mainMedia}" alt="${p.title}" style="width:100%;display:block;" />`;
+
+    const galleryHTML = p.gallery && p.gallery.length
+      ? `<div class="detail-gallery">
+           ${p.gallery.map(src => `<img src="${src}" alt="" loading="lazy" />`).join('')}
+         </div>`
+      : '';
+
+    const writeupHTML = p.writeup.map(para => `<p>${para}</p>`).join('');
+
+    return `
+      <div class="detail-media">${mediaHTML}</div>
+
+      <div class="detail-meta">
+        <div class="detail-meta-item">
+          <div class="label">Date</div>
+          <div class="value">${p.date}</div>
+        </div>
+        <div class="detail-meta-item">
+          <div class="label">Type</div>
+          <div class="value">${p.challenge}</div>
+        </div>
+        <div class="detail-meta-item">
+          <div class="label">Software</div>
+          <div class="value">${p.tech}</div>
+        </div>
+        <div class="detail-meta-item">
+          <div class="label">Render time</div>
+          <div class="value">${p.renderTime}</div>
+        </div>
+      </div>
+
+      <div class="detail-writeup">
+        <h4>About this project</h4>
+        ${writeupHTML}
+      </div>
+
+      ${galleryHTML}
+    `;
+  }
+
+
+  /* ════════════════════════════════════════════
+     CURRENT MODE
+  ════════════════════════════════════════════ */
+  let currentMode = 'page';
+  let previousPageId = '3d'; // so mode C knows where to go back
+
+
+
+ 
+
+  /* ════════════════════════════════════════════
+     — DETAIL PAGE
+  ════════════════════════════════════════════ */
+  function openDetailPage(projectId) {
+    const p = PROJECTS[projectId];
+    if (!p) return;
+
+    document.getElementById('detail-page-body').innerHTML = `
+      <div class="section-header" style="padding-top:2rem;">
+        <p class="section-label">${p.challenge}</p>
+        <h2>${p.title}</h2>
+      </div>
+      ${buildDetailHTML(p)}
+    `;
+
+    // wire back button to return to previous page
+    document.getElementById('detail-back-btn').onclick = () => showPage(previousPageId);
+
+    showPage('detail-page');
+  }
+
+
+  /* ════════════════════════════════════════════
+     CLICK HANDLER — routes to correct mode
+  ════════════════════════════════════════════ */
+  document.querySelectorAll('.media-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const projectId = trigger.dataset.project;
+      if (!projectId) return;
+
+
+        openDetailPage(projectId);
+      
+    });
+  });
+
+
+  /* ════════════════════════════════════════════
+     PAGE NAVIGATION
+  ════════════════════════════════════════════ */
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const btn = document.querySelector(`.nav-links button[data-target="${id}"]`);
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // track where we came from (for mode C back button)
+    if (id !== 'detail-page') previousPageId = id;
+  }
+
+  document.querySelectorAll('.nav-links button').forEach(btn => {
+    btn.addEventListener('click', () => showPage(btn.dataset.target));
+  });
+  </script>
+
+</body>
+</html>
